@@ -2,14 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-class Square extends React.Component {
-  render() {
-    return (
-      <button className="square" onClick={() => this.props.onClick()}>
-        {this.props.value}
-      </button>
-    );
-  }
+// Since the Square components no longer maintain state,
+// the Square components receive values from the Board component and inform the Board component when they’re clicked.
+// In React terms, the Square components are now controlled components.
+// In React, function components are a simpler way to write components that only contain a render method and don’t have their own state.
+function Square(props) {
+  return (
+    <button className="square" onClick={() => props.onClick()}>
+      {props.value}
+    </button>
+  );
 }
 
 class Board extends React.Component {
