@@ -39,3 +39,9 @@ export function getInvoice(number) {
   // look up invoice by 'invoice.number'
   return invoices.find((invoice) => invoice.number === number);
 }
+
+export function deleteInvoice(number) {
+  invoices = invoices.filter(
+    invoice => invoice.number !== number
+  );
+}
