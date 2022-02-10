@@ -11,6 +11,8 @@ export default function Invoices() {
           padding: "1rem",
         }}
       >
+        {/* Below instead of inline CSS, we could also className and specify CSS outside */}
+        {/* <NavLink className={({ isActive }) => isActive ? "red" : "blue"} /> */}
         {invoices.map((invoice) => (
           <NavLink
             style={({ isActive }) => {
