@@ -1,4 +1,4 @@
-# Several React Tutorials - Based on the Official Docs
+# React Tutorials (based on the official docs)
 
 Unless otherwise mentioned, all projects were bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
