@@ -5,6 +5,8 @@ function Search() {
     
     // initialize state  
     const [characters, setCharacters] = useState([]);
+    const [matchingCharacters, setMatchingCharacters] = useState([]);
+    const [searchKey, setSearchKey] = useState("");
 
     const getCharacters = async () => {
         const response  = await axios.get("https://thronesapi.com/api/v2/Characters");
@@ -12,20 +14,24 @@ function Search() {
     }
 
     const searchCharacter = (event) => {
-        let searchKey = event.target.value;
-        console.log(searchKey);
+        setSearchKey(event.target.value);
+        displayMatchingCharacters();
     }
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
-      getCharacters();
+      getCharacters();;
     }, []);
 
-    // const displayCharacters = characters.forEach((c) => {
-    //     return (<img src={c.url} alt={c.fullName} width="200" height="200" />);
-    // });
+    const displayMatchingCharacters = () => {
+        const filteredCharacters = characters.filter((c) => {
+            return c.fullName.toLowerCase().includes(searchKey.toLowerCase());
+        });
+        setMatchingCharacters(filteredCharacters);
+    }
 
     return (
+    
       <div>
         <form>
           <label>Character Name </label>
@@ -37,14 +43,12 @@ function Search() {
           ></input>
         </form>
         <div>
-          {/* {displayCharacters} */}
-          {characters.map(function (c, index) {
+          {matchingCharacters.map(function (char, index) {
             return (
-              <div>
-                <img src={c.imageUrl} key={index} alt={c.fullName} width="200" height="200" />
-                <h4>{c.fullName}</h4>
-              </div>
-            );
+                <div>
+                    <img src={char.imageUrl} key={index} alt={char.fullName} width="200" height="200" />
+                    <h4>{char.fullName}</h4>
+              </div>);
           })}
         </div>
       </div>
