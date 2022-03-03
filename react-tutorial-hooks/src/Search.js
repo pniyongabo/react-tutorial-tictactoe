@@ -23,6 +23,18 @@ function Search() {
     filterAndSetMatchingCharacters();
   };
 
+  // const setSearchCharacterFromForm = (event) => {
+  //   let searchKeyVal = document.getElementById("characterName").value;
+  //   if (searchKeyVal !== undefined) {
+  //     setSearchKey(searchKeyVal);
+  //   }
+  //   filterAndSetMatchingCharacters();
+  //   event.preventDefault();
+  // }
+
+  const doNothing = (event) => {
+    event.preventDefault();
+  }
   // Similar to componentDidMount and componentDidUpdate
   useEffect(() => {
     getCharacters();
@@ -39,16 +51,18 @@ function Search() {
 
   return (
     <div>
-      <form>
-        <label>Character Name </label>
+      <form style={{ padding: 20 }} onSubmit={doNothing}>
+        {/* <label>Character Name</label> */}
         <input
           type="text"
-          id="cname"
-          name="cname"
-          placeholder="search character"
+          id="characterName"
+          name="characterName"
           onChange={setSearchCharacter}
+          size="30"
+          placeholder="search character by first/last name"
         ></input>
       </form>
+
       <div className="container">
         <div className="row">
           {matchingCharacters.map(function (char, index) {
