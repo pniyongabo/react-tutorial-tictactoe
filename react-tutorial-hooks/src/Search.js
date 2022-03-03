@@ -11,21 +11,28 @@ function Search() {
     const getCharacters = async () => {
         const response  = await axios.get("https://thronesapi.com/api/v2/Characters");
         setCharacters(response.data);
+        setMatchingCharacters(response.data);
     }
 
-    const searchCharacter = (event) => {
-        setSearchKey(event.target.value);
-        displayMatchingCharacters();
+    const setSearchCharacter = (event) => {
+        let searchKeyVal = event.target.value;
+        if (searchKeyVal !== undefined) {
+          setSearchKey(searchKeyVal);
+        }
+        filterAndSetMatchingCharacters();
     }
 
-    // Similar to componentDidMount and componentDidUpdate:
+    // Similar to componentDidMount and componentDidUpdate
     useEffect(() => {
-      getCharacters();;
+      getCharacters();
+      filterAndSetMatchingCharacters();
     }, []);
 
-    const displayMatchingCharacters = () => {
+    const filterAndSetMatchingCharacters = () => {
         const filteredCharacters = characters.filter((c) => {
-            return c.fullName.toLowerCase().includes(searchKey.toLowerCase());
+            //return c.fullName.toLowerCase().includes(searchKey.toLowerCase());
+            return c.fullName.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
+
         });
         setMatchingCharacters(filteredCharacters);
     }
@@ -33,19 +40,20 @@ function Search() {
     return (
     
       <div>
-        <form>
+        <form> 
           <label>Character Name </label>
           <input
             type="text"
             id="cname"
             name="cname"
-            onChange={searchCharacter}
+            placeholder="search character"
+            onChange={setSearchCharacter}
           ></input>
         </form>
         <div>
           {matchingCharacters.map(function (char, index) {
             return (
-                <div>
+                <div key={index}>
                     <img src={char.imageUrl} key={index} alt={char.fullName} width="200" height="200" />
                     <h4>{char.fullName}</h4>
               </div>);
